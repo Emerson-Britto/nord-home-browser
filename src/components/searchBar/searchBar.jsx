@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import Styled from 'styled-components';
 
 import branding from '../../assets/branding/branding-nord-whitetheme.png';
-
-import { istatic, baseUrl } from 'api/istatic';
-
 import icon_expand_more from '../../assets/icons/expand_more_white_24dp.svg';
+
+import { istatic } from 'api/istatic';
+
+import { useSearchContext } from 'common/contexts/search';
 
 
 const ViewPort = Styled.section`
@@ -104,54 +105,23 @@ const SearchInput = Styled.input`
 
 const SearchBar = () => {
 
-	const [showEngines, setShowEngines] = useState(false);
-	const [searchInput, setSearchInput] = useState('');
-	const [activeEngine, setActiveEngine] = useState({
-        id: 'D-457',
-        name: 'DuckDuckGo',
-        alt: "DuckDuckGo's branding",
-        engineBranding: ()=> `${baseUrl}imgs/branding/duckduckgo.svg`,
-        searchApi: 'https://duckduckgo.com/?q='
-    });
-
-
-    const selectEngine = engine => {
-    	setActiveEngine(engine);
-    	setShowEngines(showEngines =>!showEngines);
-    };
-
-    const search = e => {
-    	let element = document.activeElement;
-    	
-    	if(e.key && e.key === "Enter" && element.localName === 'input' && element.value.length){
-    		
-    		let exp = /(http(s)?:\/\/)?(www.)?[A-Za-z0-9_]*.com(.br)?\/*/g;
-
-    		if(exp.test(element.value)){
-    			element.value.includes('http')
-    				? window.location.href = element.value
-    				: window.location.href = 'https://' + element.value
-    			
-    		} else {
-				window.location.href = activeEngine.searchApi + element.value;    			
-    		}
-    	}
-    }
-
-
-    useEffect(()=>{
-
-        document.addEventListener("keyup", e => search(e));
-        return ()=> document.removeEventListener("keyup", e => search(e));
-
-    },[activeEngine])
+	const {
+		selectEngine,
+		search,
+		searchInput,
+		setSearchInput,
+		activeEngine,
+		showEngines,
+		toggleBoxActive,
+		eventClose
+	} = useSearchContext();
 
 
 	return (
-		<ViewPort>
+		<ViewPort onClick={e=> eventClose(e)}>
 			<BrandingFrame src={branding} alt='Nord Branding'/>
 			<SearchField>
-				<SelectEngine onClick={()=> setShowEngines(showEngines =>!showEngines)}>
+				<SelectEngine onClick={e=> toggleBoxActive(e)}>
 					<EngineBranding src={activeEngine.engineBranding()} alt='icon_expand_more'/>
 					<IconExpandMore src={icon_expand_more} alt='icon_expand_more'/>
 				</SelectEngine>
@@ -159,8 +129,8 @@ const SearchBar = () => {
 					{istatic.map((engine, i) => {
 						return (
 							<EngineOption 
-								key={engine.id} 
-								onClick={()=> selectEngine(engine) }>
+								key={engine.id}
+								onClick={e=> selectEngine(e, engine) }>
 								<EngineBranding src={engine.engineBranding()} alt={engine.alt}/>
 								<p>{engine.name}</p>
 							</EngineOption>				
