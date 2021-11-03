@@ -112,7 +112,11 @@ export function useBookmarksContext(){
 	};
 
 	useEffect(()=>{
-	    setBookmarks(Storage.get('bookmarks'))
+	    if(Storage.get('bookmarks')){
+	    	setBookmarks(Storage.get('bookmarks'))
+	    } else {
+	    	setBookmarks([]);
+	    }
 	
 	},[])
 
