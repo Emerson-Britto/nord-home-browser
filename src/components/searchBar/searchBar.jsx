@@ -15,6 +15,7 @@ const ViewPort = Styled.section`
 	flex-direction: column;
 	justify-content: center;
 	align-Items: center;
+	margin: 0 80px;
 `
 
 const BrandingFrame = Styled.img`
@@ -107,7 +108,6 @@ const SearchBar = () => {
 
 	const {
 		selectEngine,
-		search,
 		searchInput,
 		setSearchInput,
 		activeEngine,
@@ -130,7 +130,7 @@ const SearchBar = () => {
 						return (
 							<EngineOption 
 								key={engine.id}
-								onClick={e=> selectEngine(e, engine) }>
+								onClick={e=> selectEngine(e, engine, i) }>
 								<EngineBranding src={engine.engineBranding()} alt={engine.alt}/>
 								<p>{engine.name}</p>
 							</EngineOption>				

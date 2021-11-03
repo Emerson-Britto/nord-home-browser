@@ -28,3 +28,4 @@ export const istatic = [
     }
 ];
 
+export const bookmarkIcon = (domain)=> `https://external-content.duckduckgo.com/ip3/${domain}.ico`

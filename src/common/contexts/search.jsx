@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { baseUrl } from 'api/istatic';
+import { istatic, baseUrl } from 'api/istatic';
+import { Storage } from 'common/storage';
 
 export const SearchContext = createContext();
 SearchContext.displayName = 'Search';
@@ -47,10 +48,11 @@ export function useSearchContext(){
 // =============================================================
 
 
-    const selectEngine = (e, engine) => {
+    const selectEngine = (e, engine, i) => {
     	e.stopPropagation();
     	setActiveEngine(engine);
     	setShowEngines(showEngines =>!showEngines);
+    	Storage.set('activeEngine', i);
     };
 
     const search = e => {
@@ -83,6 +85,8 @@ export function useSearchContext(){
 
 
     useEffect(()=>{
+
+    	if(Storage.get('activeEngine')) setActiveEngine(istatic[Storage.get('activeEngine')]);
 
         document.addEventListener("keyup", e => search(e));
         return ()=> document.removeEventListener("keyup", e => search(e));
