@@ -14,7 +14,7 @@ const BookmarksWrapper = Styled.section`
 `
 
 const BookmarksList = Styled.ul`
-	color: #fff;
+	color: ${({ theme }) => theme.text};
 `
 
 const Bookmark = Styled.li`
@@ -27,8 +27,8 @@ const Bookmark = Styled.li`
 	transition: 400ms;
 
 	:hover {
-		cursor: pointer;
-		background-color: rgb(255 255 255 / 4%);
+		cursor: pointer;		
+		box-shadow: 0px 0px 30px rgb(0 0 0 / 15%);
 	}
 
 	:hover .editBookmark {
@@ -57,6 +57,7 @@ const EditBookmark = Styled.section`
 	width: 40px;
 	height: 40px;
 	border-radius: 8px;
+	filter: ${({ theme }) => theme.filter};
 
 	:hover {
 		background-color: rgb(255 255 255 /10%);
@@ -70,6 +71,7 @@ const AddBookmark = Styled.section`
 	border-radius: 7px;
 	background: url(${add}) no-repeat center;
 	transition: 500ms;
+	filter: ${({ theme }) => theme.filter};
 
 	:hover {
 		cursor: pointer;

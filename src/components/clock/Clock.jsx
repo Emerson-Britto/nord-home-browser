@@ -12,13 +12,13 @@ const RealTime = Styled(Moment)`
 	font-size: 3.3em;
 	margin-bottom: 10px;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-	color: #fff;
+	color: ${({ theme }) => theme.text};
 `
 
 const DateTime = Styled(Moment)`
 	font-size: 1.7em;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-	color: #fff;
+	color: ${({ theme }) => theme.text};
 `
 
 const Clock = () => {

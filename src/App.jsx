@@ -1,7 +1,11 @@
+import React, { useState } from 'react';
+
 import SearchBar from 'components/searchBar';
 import Clock from 'components/clock';
 import Bookmarks from 'components/bookmarks';
 import Styled from 'styled-components';
+import { ThemeProvider } from 'styled-components';
+import { lightTheme, darkTheme } from 'common/UI/theme';
 
 import { GlobalStyle } from './GlobalStyle';
 import SearchProvider from 'common/contexts/search';
@@ -21,19 +25,23 @@ const Shortcut = Styled.section`
 `
 
 function App() {
+  const [theme, setTheme] = useState(false);
+
   return (
-    <ViewPort>
-      <GlobalStyle/>
-      <SearchProvider>
-      <Shortcut>
-        <BookmarksProvider>
-          <Clock/>
-          <Bookmarks/>
-        </BookmarksProvider>
-      </Shortcut>
-      <SearchBar/>
-      </SearchProvider>
-    </ViewPort>
+    <ThemeProvider theme={theme ? lightTheme : darkTheme}>
+      <ViewPort>
+        <GlobalStyle/>
+        <SearchProvider>
+        <Shortcut>
+          <BookmarksProvider>
+            <Clock/>
+            <Bookmarks/>
+          </BookmarksProvider>
+        </Shortcut>
+        <SearchBar theme={theme}/>
+        </SearchProvider>
+      </ViewPort>
+    </ThemeProvider>
   );
 }
 

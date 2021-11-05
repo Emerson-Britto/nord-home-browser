@@ -5,7 +5,8 @@
       "components": ["components"],
       "common": ["common"],
       "scripts": ["scripts"],
-      "api": ["api"]
+      "api": ["api"],
+      "assets": ["assets"]
     }
   },
   "exclude": ["node_modules"],

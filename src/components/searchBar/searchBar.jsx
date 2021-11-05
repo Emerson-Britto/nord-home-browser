@@ -1,13 +1,12 @@
 import React from 'react';
-
 import Styled from 'styled-components';
 
-import branding from '../../assets/branding/branding-nord-whitetheme.png';
-import icon_expand_more from '../../assets/icons/expand_more_white_24dp.svg';
+import icon_expand_more from 'assets/icons/expand_more_white_24dp.svg';
 
 import { istatic } from 'api/istatic';
 
 import { useSearchContext } from 'common/contexts/search';
+import BrandingFrame from 'components/brandingFrame';
 
 
 const ViewPort = Styled.section`
@@ -18,10 +17,7 @@ const ViewPort = Styled.section`
 	margin: 0 80px;
 `
 
-const BrandingFrame = Styled.img`
-	width: 220px;
-	margin-bottom: 5px;
-`
+
 
 const SearchField = Styled.section`
 	position: relative;
@@ -35,6 +31,7 @@ const SelectEngine = Styled.section`
 	height: 40px;
 	border-radius: 8px 0 0 8px;
 	background-color: #080C19;
+	box-shadow: 0px 0px 30px rgb(0 0 0 /20%);
 
 	:hover {
 		cursor: pointer;
@@ -81,18 +78,19 @@ const SearchInput = Styled.input`
 	width: 35vw;
 	height: 30px;
 	background-color: transparent;
-	color: #fff;
+	color: ${({ theme }) => theme.text};
 	font-size: 1em;
 	outline: none;
 	border-radius: 0 8px 8px 0;
-	border: 1px solid gray;
+	border: 1px solid ${({ theme }) => theme.border};
 	padding: 5px 10px;
 	transition: 500ms;
 	margin-bottom: 130px;
 
 
 	:focus {
-		border: 1px solid white;
+		border: 1px solid ${({ theme }) => theme.activeBorder};
+		box-shadow: 0px 0px 30px rgb(0 0 0 /15%);
 	}
 
 	@media screen and (max-width: 990px) {
@@ -104,7 +102,9 @@ const SearchInput = Styled.input`
 	}
 `
 
-const SearchBar = () => {
+const SearchBar = ({ theme }) => {
+
+	console.log(theme);
 
 	const {
 		selectEngine,
@@ -119,7 +119,7 @@ const SearchBar = () => {
 
 	return (
 		<ViewPort onClick={e=> eventClose(e)}>
-			<BrandingFrame src={branding} alt='Nord Branding'/>
+			<BrandingFrame theme={theme}/>
 			<SearchField>
 				<SelectEngine onClick={e=> toggleBoxActive(e)}>
 					<EngineBranding src={activeEngine.engineBranding()} alt='icon_expand_more'/>
