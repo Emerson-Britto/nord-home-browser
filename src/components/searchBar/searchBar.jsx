@@ -104,7 +104,6 @@ const SearchInput = Styled.input`
 
 const SearchBar = ({ theme }) => {
 
-	console.log(theme);
 
 	const {
 		selectEngine,

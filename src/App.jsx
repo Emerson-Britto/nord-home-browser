@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
+import Header from 'components/header';
 import SearchBar from 'components/searchBar';
 import Clock from 'components/clock';
 import Bookmarks from 'components/bookmarks';
 import Styled from 'styled-components';
 import { ThemeProvider } from 'styled-components';
 import { lightTheme, darkTheme } from 'common/UI/theme';
+import { Storage } from 'common/storage'
 
 import { GlobalStyle } from './GlobalStyle';
 import SearchProvider from 'common/contexts/search';
@@ -27,18 +29,23 @@ const Shortcut = Styled.section`
 function App() {
   const [theme, setTheme] = useState(false);
 
+  useEffect(()=> {
+    if(Storage.get('appTheme-344')) setTheme(Storage.get('appTheme-344'));
+  },[])
+
   return (
     <ThemeProvider theme={theme ? lightTheme : darkTheme}>
       <ViewPort>
         <GlobalStyle/>
+        <Header currentTheme={{theme, setTheme}}/>
         <SearchProvider>
-        <Shortcut>
-          <BookmarksProvider>
-            <Clock/>
-            <Bookmarks/>
-          </BookmarksProvider>
-        </Shortcut>
-        <SearchBar theme={theme}/>
+          <Shortcut>
+            <BookmarksProvider>
+              <Clock/>
+              <Bookmarks/>
+            </BookmarksProvider>
+          </Shortcut>
+          <SearchBar theme={theme}/>
         </SearchProvider>
       </ViewPort>
     </ThemeProvider>

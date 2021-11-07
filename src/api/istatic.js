@@ -28,4 +28,9 @@ export const istatic = [
     }
 ];
 
+export const getIcon = {
+    lightTheme: ()=> `${baseUrl}icons/light_mode_white_24dp.svg`,
+    darkTheme: ()=> `${baseUrl}icons/dark_mode_black_24dp.svg`
+};
+
 export const bookmarkIcon = (domain)=> `https://external-content.duckduckgo.com/ip3/${domain}.ico`

@@ -6,7 +6,7 @@ import {
   hoverOnDarkBackground,
   darkText,
   lightBorder,
-  darkBorder,
+  //darkBorder,
   grayBorder,
   graylightBorder
 } from "./variables";

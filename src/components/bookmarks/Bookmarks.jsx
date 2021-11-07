@@ -27,7 +27,8 @@ const Bookmark = Styled.li`
 	transition: 400ms;
 
 	:hover {
-		cursor: pointer;		
+		cursor: pointer;
+		background-color: ${({ theme }) => theme.hover};		
 		box-shadow: 0px 0px 30px rgb(0 0 0 / 15%);
 	}
 
