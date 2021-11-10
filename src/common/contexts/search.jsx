@@ -62,13 +62,13 @@ export function useSearchContext(){
     		
     		let exp = /(http(s)?:\/\/)?(www.)?[A-Za-z0-9_]*.com(.br)?\/*/g;
 
-    		if(exp.test(element.value)){
-    			element.value.startsWith('http://') || element.value.startsWith('https://')
-    				? window.location.href = element.value
-    				: window.location.href = 'https://' + element.value
-    		} else {
-				window.location.href = activeEngine.searchApi + element.value;
-    		}
+			if(exp.test(element.value)){
+				element.value.startsWith('http://') || element.value.startsWith('https://')
+					? window.open(element.value, '_blank')
+					: window.open('https://' + element.value, '_blank')
+			} else {
+				window.open(istatic[Storage.get('activeEngine')].searchApi + element.value, '_blank');
+			}
     	}
     }
 
@@ -84,15 +84,20 @@ export function useSearchContext(){
     };
 
 
-    useEffect(()=>{
-
-    	if(Storage.get('activeEngine')) setActiveEngine(istatic[Storage.get('activeEngine')]);
-
-        document.addEventListener("keyup", e => search(e));
-        return ()=> document.removeEventListener("keyup", e => search(e));
-
+    useEffect(()=> {
+    	if(Storage.get('activeEngine')){
+    		setActiveEngine(istatic[Storage.get('activeEngine')])
+    	} else {
+    		Storage.set('activeEngine', 0);
+    		setActiveEngine(istatic[Storage.get('activeEngine')]);
+    	}
     },[activeEngine]);
 
+
+    useEffect(()=> {
+        document.addEventListener("keyup", e => search(e));
+        return ()=> document.removeEventListener("keyup", e => search(e), true);
+    },[])
 
 	return {
 		selectEngine,
@@ -107,11 +112,22 @@ export function useSearchContext(){
 }
 
 /* 
-	if(exp.test(element.value)){
-		element.value.startsWith('http://') || element.value.startsWith('https://')
-			? window.open(element.value, '_blank')
-			: window.open('https://' + element.value, '_blank')
-	} else {
-		window.open(activeEngine.searchApi + element.value, '_blank');
-	}
+			if(exp.test(element.value)){
+				element.value.startsWith('http://') || element.value.startsWith('https://')
+					? window.open(element.value, '_blank')
+					: window.open('https://' + element.value, '_blank')
+			} else {
+				window.open(activeEngine.searchApi + element.value, '_blank');
+			}
+*/
+
+/*
+
+    		if(exp.test(element.value)){
+    			element.value.startsWith('http://') || element.value.startsWith('https://')
+    				? window.location.href = element.value
+    				: window.location.href = 'https://' + element.value
+    		} else {
+				window.location.href = activeEngine.searchApi + element.value;
+    		}
 */

@@ -38,13 +38,13 @@ function App() {
       <ViewPort>
         <GlobalStyle/>
         <Header currentTheme={{theme, setTheme}}/>
-        <SearchProvider>
           <Shortcut>
             <BookmarksProvider>
               <Clock/>
               <Bookmarks/>
             </BookmarksProvider>
           </Shortcut>
+        <SearchProvider>
           <SearchBar theme={theme}/>
         </SearchProvider>
       </ViewPort>

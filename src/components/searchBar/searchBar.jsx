@@ -17,8 +17,6 @@ const ViewPort = Styled.section`
 	margin: 0 80px;
 `
 
-
-
 const SearchField = Styled.section`
 	position: relative;
 	display: flex;
