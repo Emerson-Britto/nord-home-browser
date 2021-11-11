@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { istatic, baseUrl } from 'api/istatic';
+import { searchEngine, baseUrl, getWebAPP } from 'api/istatic';
 import { Storage } from 'common/storage';
 
 export const SearchContext = createContext();
@@ -9,12 +9,13 @@ export default function SearchProvider({ children }){
 
 	const [showEngines, setShowEngines] = useState(false);
 	const [searchInput, setSearchInput] = useState('');
+	const [autoComplete, setAutoComplete] = useState([]);
 	const [activeEngine, setActiveEngine] = useState({
         id: 'D-457',
         name: 'DuckDuckGo',
         alt: "DuckDuckGo's branding",
-        engineBranding: ()=> `${baseUrl}imgs/branding/duckduckgo.svg`,
-        searchApi: 'https://duckduckgo.com/?q='
+        branding: ()=> `${baseUrl}imgs/branding/duckduckgo.svg`,
+        api: 'https://duckduckgo.com/?q='
     });
 
 
@@ -24,6 +25,8 @@ export default function SearchProvider({ children }){
 			setShowEngines,
 			searchInput,
 			setSearchInput,
+			autoComplete,
+			setAutoComplete,
 			activeEngine,
 			setActiveEngine
 		}}>
@@ -40,6 +43,8 @@ export function useSearchContext(){
 		setShowEngines,
 		searchInput,
 		setSearchInput,
+		autoComplete,
+		setAutoComplete,
 		activeEngine,
 		setActiveEngine
 	} = useContext(SearchContext);
@@ -67,11 +72,14 @@ export function useSearchContext(){
 					? window.open(element.value, '_blank')
 					: window.open('https://' + element.value, '_blank')
 			} else {
-				window.open(istatic[Storage.get('activeEngine')].searchApi + element.value, '_blank');
+				window.open(searchEngine[Storage.get('activeEngine')].api + element.value, '_blank');
 			}
     	}
     }
 
+    const searchDirectLinks = value => {
+    	setAutoComplete(getWebAPP(value))
+    }
 
     const eventClose = e => {
     	e.stopPropagation();
@@ -86,10 +94,10 @@ export function useSearchContext(){
 
     useEffect(()=> {
     	if(Storage.get('activeEngine')){
-    		setActiveEngine(istatic[Storage.get('activeEngine')])
+    		setActiveEngine(searchEngine[Storage.get('activeEngine')])
     	} else {
     		Storage.set('activeEngine', 0);
-    		setActiveEngine(istatic[Storage.get('activeEngine')]);
+    		setActiveEngine(searchEngine[Storage.get('activeEngine')]);
     	}
     },[activeEngine]);
 
@@ -104,6 +112,8 @@ export function useSearchContext(){
 		search,
 		searchInput,
 		setSearchInput,
+		autoComplete,
+		searchDirectLinks,
 		activeEngine,
 		showEngines,
 		toggleBoxActive,

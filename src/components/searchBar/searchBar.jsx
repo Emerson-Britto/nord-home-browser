@@ -1,9 +1,11 @@
 import React from 'react';
 import Styled from 'styled-components';
 
+import SearchAutoComplete from 'components/searchAutoComplete'; 
+
 import icon_expand_more from 'assets/icons/expand_more_white_24dp.svg';
 
-import { istatic } from 'api/istatic';
+import { searchEngine } from 'api/istatic';
 
 import { useSearchContext } from 'common/contexts/search';
 import BrandingFrame from 'components/brandingFrame';
@@ -107,11 +109,15 @@ const SearchBar = ({ theme }) => {
 		selectEngine,
 		searchInput,
 		setSearchInput,
+		autoComplete,
+		searchDirectLinks,
 		activeEngine,
 		showEngines,
 		toggleBoxActive,
 		eventClose
 	} = useSearchContext();
+
+	const autoCompleteList = ['teste', 'fdfdfdf', 'dfdfdf'];
 
 
 	return (
@@ -119,16 +125,16 @@ const SearchBar = ({ theme }) => {
 			<BrandingFrame theme={theme}/>
 			<SearchField>
 				<SelectEngine onClick={e=> toggleBoxActive(e)}>
-					<EngineBranding src={activeEngine.engineBranding()} alt='icon_expand_more'/>
+					<EngineBranding src={activeEngine.branding()} alt='icon_expand_more'/>
 					<IconExpandMore src={icon_expand_more} alt='icon_expand_more'/>
 				</SelectEngine>
 				<Options show={showEngines}>
-					{istatic.map((engine, i) => {
+					{searchEngine.map((engine, i) => {
 						return (
 							<EngineOption 
 								key={engine.id}
 								onClick={e=> selectEngine(e, engine, i) }>
-								<EngineBranding src={engine.engineBranding()} alt={engine.alt}/>
+								<EngineBranding src={engine.branding()} alt={engine.alt}/>
 								<p>{engine.name}</p>
 							</EngineOption>				
 						)
@@ -140,7 +146,12 @@ const SearchBar = ({ theme }) => {
 					ref={ref=> { if(ref) ref.focus()}}
 					placeholder={`Search with ${activeEngine.name} or enter Address`}
 					value={searchInput}
-					onChange={e=> setSearchInput(e.target.value)}/>
+					onChange={e=> {
+						setSearchInput(e.target.value);
+						searchDirectLinks(e.target.value);
+					}}/>
+				{autoComplete.length > 0 
+					&& <SearchAutoComplete autoCompleteList={autoComplete}/>}
 			</SearchField>
 		</ViewPort>
 	);
