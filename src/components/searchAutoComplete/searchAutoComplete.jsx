@@ -1,7 +1,4 @@
 import React from 'react';
-
-import { getIcon } from 'api/istatic';
-
 import Styled from 'styled-components';
 
 const OptionsCompleteSearch = Styled.section`

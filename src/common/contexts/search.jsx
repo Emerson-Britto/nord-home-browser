@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { searchEngine, baseUrl, getWebAPP } from 'api/istatic';
+import { searchEngine, API_istatic, getWebAPP } from 'api/istatic';
 import { Storage } from 'common/storage';
 
 export const SearchContext = createContext();
@@ -14,7 +14,7 @@ export default function SearchProvider({ children }){
         id: 'D-457',
         name: 'DuckDuckGo',
         alt: "DuckDuckGo's branding",
-        branding: ()=> `${baseUrl}imgs/branding/duckduckgo.svg`,
+        branding: ()=> `${API_istatic}imgs/branding/duckduckgo.svg`,
         api: 'https://duckduckgo.com/?q='
     });
 
@@ -77,8 +77,8 @@ export function useSearchContext(){
     	}
     }
 
-    const searchDirectLinks = value => {
-    	setAutoComplete(getWebAPP(value))
+    const searchDirectLinks = async(value) => {
+    	setAutoComplete(await getWebAPP(value))
     }
 
     const eventClose = e => {

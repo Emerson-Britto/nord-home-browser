@@ -117,8 +117,6 @@ const SearchBar = ({ theme }) => {
 		eventClose
 	} = useSearchContext();
 
-	const autoCompleteList = ['teste', 'fdfdfdf', 'dfdfdf'];
-
 
 	return (
 		<ViewPort onClick={e=> eventClose(e)}>
