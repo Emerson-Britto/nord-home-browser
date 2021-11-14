@@ -27,11 +27,23 @@ export const searchEngine = [
         branding: ()=> `${API_istatic}imgs/branding/google.svg`,
         api: 'https://www.google.com/search?q='
     },{
+        id: 'YT-183',
+        name: 'YouTube',
+        alt: "youtube's branding",
+        branding: ()=> `${API_istatic}imgs/branding/youtube.svg`,
+        api: 'https://www.youtube.com/results?search_query='
+    },{
         id: 'B-794',
         name: 'Bing',
         alt: "Bing's branding",
         branding: ()=> `${API_istatic}imgs/branding/bing.svg`,
         api: 'https://www.bing.com/search?q='
+    },{
+        id: 'Y-912',
+        name: 'Yahoo!',
+        alt: "Yahoo's branding",
+        branding: ()=> `${API_istatic}imgs/branding/yahoo.svg`,
+        api: 'https://ca.search.yahoo.com/search?p='
     }
 ];
 
